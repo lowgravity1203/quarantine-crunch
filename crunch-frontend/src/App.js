@@ -1,9 +1,14 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route} from 'react-router-dom'
 
-function App() {
-  return <h1>Let's start!</h1>
+import Users from './users/pages/Users'
+
+  const App = () => {
+  return <Router>
+    <Route path="/">
+      <Users />
+    </Route>
+  </Router>
   
 }
 
