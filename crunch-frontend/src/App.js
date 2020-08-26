@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-do
 import Users from './users/pages/Users'
 import NewWorkout from './workouts/pages/NewWorkout'
 import UserWorkouts from './workouts/pages/UserWorkouts'
+import UpdateWorkout from './workouts/pages/UpdateWorkout'
 import MainNavigation from './shared/components/Navigation/MainNavigation'
 
   const App = () => {
@@ -19,6 +20,9 @@ import MainNavigation from './shared/components/Navigation/MainNavigation'
         </Route>
      <Route path="/workouts/new"exact>
           <NewWorkout />
+        </Route>
+        <Route path="/workouts/:workoutId">
+          <UpdateWorkout />
         </Route>
         <Redirect  to="/" />
       </Switch>

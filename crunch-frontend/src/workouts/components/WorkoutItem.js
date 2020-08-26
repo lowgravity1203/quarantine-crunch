@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Card from '../../shared/components/UIElements/Card'
+import Button from '../../shared/components/FormElements/Button'
 import './WorkoutItem.css'
 
 const WorkoutItem = props => {
@@ -15,8 +16,8 @@ const WorkoutItem = props => {
             <p>{props.description}</p>
          </div>
          <div className="place-item__actions">
-             <button>Edit</button>
-             <button>Delete</button>
+             <Button to={`/places/${props.id}`}>Edit</Button>
+             <Button danger>Delete</Button>
          </div>
          </Card>
      </li>
