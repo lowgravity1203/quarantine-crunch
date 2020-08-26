@@ -4,6 +4,7 @@ import {useParams} from 'react-router-dom'
 
 import WorkoutList from '../components/WorkoutList';
 
+
 const DUMMY_PLACES = [
     {
         id: 'w1',

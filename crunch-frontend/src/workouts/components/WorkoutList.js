@@ -3,6 +3,7 @@ import React from 'react';
 
 import Card from '../../shared/components/UIElements/Card'
 import WorkoutItem from './WorkoutItem';
+import Button from '../../shared/components/FormElements/Button'
 import './WorkoutList.css'
 
 const WorkoutList = props => {
@@ -11,7 +12,7 @@ const WorkoutList = props => {
             <div className="place-list center">
                 <Card>
                     <h2>No Workouts found. maybe create one?</h2>
-                    <button>Create Workout</button>
+                    <Button to="/workouts/new">Create Workout</Button>
                 </Card>
             </div>
         );

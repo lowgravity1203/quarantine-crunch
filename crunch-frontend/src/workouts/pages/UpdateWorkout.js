@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom'
 
 import Input from '../../shared/components/FormElements/Input'
 import Button from '../../shared/components/FormElements/Button'
+import Card from '../../shared/components/UIElements/Card'
 import {VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH} from '../../shared/util/validators'
 import { useForm } from '../../shared/hooks/form-hook'
 import './WorkoutForm.css'
@@ -26,10 +27,11 @@ const DUMMY_PLACES = [
 ]
 
 const UpdateWorkout = () => {
+    const [isLoading, setIsLoading] = useState(true)
    const workoutId = useParams().workoutId
 
    
-   const [formState, inputHandler] = useForm({
+   const [formState, inputHandler, setFormData] = useForm({
        title: {
            value: '',
            isValid: false
@@ -42,6 +44,26 @@ const UpdateWorkout = () => {
     )
 
     const identifiedWorkout = DUMMY_PLACES.find(w => w.id === workoutId)
+
+useEffect(() => {
+    if (identifiedWorkout) {
+        setFormData({
+            title: {
+                value: identifiedWorkout.title,
+                isValid: true
+             },
+             description: {
+                 value: identifiedWorkout.description,
+                 isValid: true
+             }
+         }, 
+         true
+         )   
+    }
+
+    setIsLoading(false)
+}, [setFormData, identifiedWorkout])
+
    
    const placeUpdateSubmitHandler = event => {
        event.preventDefault()
@@ -49,10 +71,21 @@ const UpdateWorkout = () => {
    }
    
     if(!identifiedWorkout) {
-        return <div className="center"><h2>Could not find workout!</h2></div>
+        return <div className="center">
+          <Card><h2>Could not find workout!</h2></Card>
+            </div>
     }
 
+if (isLoading) {
+    return(
+        <div className='center'>
+            <h2>Loading</h2>
+        </div>
+    )
+}
+
    return (
+       formState.inputs.title.value &&
         <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
             <Input 
             id="title" 
