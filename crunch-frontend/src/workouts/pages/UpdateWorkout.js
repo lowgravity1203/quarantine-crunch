@@ -4,6 +4,8 @@ import {useParams} from 'react-router-dom'
 import Input from '../../shared/components/FormElements/Input'
 import Button from '../../shared/components/FormElements/Button'
 import {VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH} from '../../shared/util/validators'
+import { useForm } from '../../shared/hooks/form-hook'
+import './WorkoutForm.css'
 
 const DUMMY_PLACES = [
     {
@@ -25,15 +27,33 @@ const DUMMY_PLACES = [
 
 const UpdateWorkout = () => {
    const workoutId = useParams().workoutId
+
    
-   const identifiedWorkout = DUMMY_PLACES.find(w => w.id === workoutId)
+   const [formState, inputHandler] = useForm({
+       title: {
+           value: '',
+           isValid: false
+        },
+        description: {
+            value: '',
+            isValid: false
+        }
+    }, true
+    )
+
+    const identifiedWorkout = DUMMY_PLACES.find(w => w.id === workoutId)
+   
+   const placeUpdateSubmitHandler = event => {
+       event.preventDefault()
+       console.log(formState.inputs)
+   }
    
     if(!identifiedWorkout) {
         return <div className="center"><h2>Could not find workout!</h2></div>
     }
 
    return (
-        <form>
+        <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
             <Input 
             id="title" 
             element="input" 
@@ -41,21 +61,21 @@ const UpdateWorkout = () => {
             label="Title" 
             validators={[VALIDATOR_REQUIRE()]} 
             errorText = "Please enter valid title"
-            onInput ={() => {} }
-            value={identifiedWorkout.title}
-            valid={true}
+            onInput ={inputHandler }
+            initialValue={formState.inputs.title.value}
+            initialValid={formState.inputs.title.isValid}
             />
               <Input 
             id="description" 
-            element="input" 
+            element="textarea" 
             label="Description" 
             validators={[VALIDATOR_MINLENGTH(5)]} 
             errorText = "Please enter valid description (min. 5 characters)"
-            onInput ={() => {} }
-            value={identifiedWorkout.description}
-            valid={true}
+            onInput ={inputHandler}
+            initialValue={formState.inputs.description.value}
+            initialValid={formState.inputs.description.isValid}
             />
-            <Button type="submit" disabled={true}>Update Workout</Button>
+            <Button type="submit" disabled={!formState.isValid}>Update Workout</Button>
         </form>
     );
 };
