@@ -46,7 +46,7 @@ const WorkoutItem = props => {
             <p>{props.description}</p>
          </div>
          <div className="place-item__actions">
-             <Button to={`/places/${props.id}`}>Edit</Button>
+             <Button to={`/workouts/${props.id}`}>Edit</Button>
              <Button danger onClick={showDeleteWarningHandler} >Delete</Button>
          </div>
          </Card>
