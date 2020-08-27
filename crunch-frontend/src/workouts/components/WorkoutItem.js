@@ -1,11 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
 import Modal from '../../shared/components/UIElements/Modal'
 import Card from '../../shared/components/UIElements/Card'
 import Button from '../../shared/components/FormElements/Button'
+import {AuthContext} from '../../shared/context/auth-context'
 import './WorkoutItem.css'
 
 const WorkoutItem = props => {
+    const auth = useContext(AuthContext)
+
     const [showConfirmModal, setShowConfirmModal] = useState(false)
 
     const showDeleteWarningHandler = () => {
@@ -46,8 +49,8 @@ const WorkoutItem = props => {
             <p>{props.description}</p>
          </div>
          <div className="place-item__actions">
-             <Button to={`/workouts/${props.id}`}>Edit</Button>
-             <Button danger onClick={showDeleteWarningHandler} >Delete</Button>
+             {auth.isLoggedIn && (<Button to={`/workouts/${props.id}`}>Edit</Button>)}
+            {auth.isLoggedIn && (<Button danger onClick={showDeleteWarningHandler} >Delete</Button>)}
          </div>
          </Card>
      </li>
